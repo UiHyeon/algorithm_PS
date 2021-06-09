@@ -1,23 +1,24 @@
+NET_PLUS = 1
+CONNECT = 1
+
 def solution(n, computers):
     answer = 0
     graph = {}
     visit = []
     
-    for i in range(n):
-        graph[i] = []
+    for com_num in range(n):
+        graph[com_num] = []
         
     for i in range(len(computers)):
         for j in range(len(computers[0])):
-            if computers[i][j] == 1:
+            if computers[i][j] == CONNECT:
                 graph[i].append(j)
                 
-    print(graph)
-                
-    for i in range(n):
-        stack = [i]
+    for base_com in range(n):
+        stack = [base_com]
 
-        if i not in visit:
-            answer += 1
+        if base_com not in visit:
+            answer += NET_PLUS
         
         while stack:
             node = stack.pop()
