@@ -1,23 +1,12 @@
 def solution(s):
-    answer = -1
     stack = []
     
     for temp in s:
-        if len(stack) == 0:
-            stack.append(temp)
-            continue
+        if len(stack) == 0: stack.append(temp)
+        elif stack[-1] == temp: stack.pop()
+        else: stack.append(temp)
             
-        first = stack.pop()
-        
-        if first == temp:
-            continue
-        else:
-            stack.append(first)
-            stack.append(temp)
-            
-    if len(stack) == 0:
+    if len(stack) == 0 : 
         return 1
     else:
         return 0
-        
-    return answer
