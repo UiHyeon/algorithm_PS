@@ -1,58 +1,72 @@
 import sys
-from collections import deque
 
 temp = list(sys.stdin.readline().rstrip())
-print(temp)
 answer = 0
 
 def check(temp):
-    stack = []
+    check_stack = []
     for item in temp:
 
         if item == ')':
-            if not stack: return False
-            if stack.pop() == '(':
+            if not check_stack: return False
+            if check_stack.pop() == '(':
                 continue
             else:
                 return False
 
         if item == ']':
-            if not stack: return False
-            if stack.pop() == '[':
+            if not check_stack: return False
+            if check_stack.pop() == '[':
                 continue
             else:
                 return False
-        stack.append(item)
+        check_stack.append(item)
 
-    if stack: return False
+    if check_stack: return False
 
     return True
 
-if check(temp): print('O')
-else: print('x')
+if check(temp):
+    stack = []
+    for item in temp:
+        if item == ']':
+            temp = 0
+            while stack:
+                top = stack.pop()
+                if top =='[':
+                    if temp == 0:
+                        stack.append(3)
+                    else:
+                        stack.append(temp*3)
+                    break
+                else:
+                    if temp == 0:
+                        temp = int(top)
+                    else:
+                        temp += int(top)
+            
+        elif item == ')':
+            temp = 0
+            while stack:
+                top = stack.pop()
+                if top =='(':
+                    if temp == 0:
+                        stack.append(2)
+                    else:
+                        stack.append(temp*2)
+                    break
+                else:
+                    if temp == 0:
+                        temp = int(top)
+                    else:
+                        temp += int(top)
 
+        else:
+            stack.append(item)
 
+    for num in stack:
+        answer += num
 
-# stack = []
-# for item in temp:
-#     if item == ']':
-#         check = stack.pop()
-#         if check == '[':
-#             continue
-#         else:
-#             print(0)
-#             break
-#     if item == ')':
-#         check = stack.pop()
-#         if check == '(':
-#             answer += 2
-#             continue
-#         else:
-#             print(0)
-#             break
+    print(answer)
 
-#     stack.append(item)
-
-# if stack:
-#     print(0)
-
+else: print(0)
